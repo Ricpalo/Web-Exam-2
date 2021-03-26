@@ -81,7 +81,6 @@
                             <small class="help-text text-danger"><?=@$this->session->flashdata('errores')['descripcion'];?></small>
                         </div>
 
-
                         <div class="col-4 form-group">
                             <label for="categoria">Categoria</label>
                             <select name="categoria" class="form-control">
