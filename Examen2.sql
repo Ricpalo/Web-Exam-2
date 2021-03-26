@@ -1,0 +1,62 @@
+DROP DATABASE IF EXISTS sw17_parcial_dos;
+CREATE DATABASE IF NOT EXISTS sw17_parcial_dos DEFAULT CHARACTER SET utf8;
+USE sw17_parcial_dos;
+
+CREATE TABLE IF NOT EXISTS carreras(
+    id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(60) NOT NULL,
+    clave VARCHAR(10) NOT NULL UNIQUE
+);
+
+CREATE TABLE IF NOT EXISTS universidades(
+    id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    nombre VARCHAR(60) NOT NULL,
+    direccion VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    telefono VARCHAR(10) NOT NULL UNIQUE
+);
+
+CREATE TABLE IF NOT EXISTS categoria_productos(
+    id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    nombre_categoria VARCHAR(60) NOT NULL,
+    descripcion TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS productos(
+    codigo_barras VARCHAR(10) NOT NULL UNIQUE PRIMARY KEY,
+    nombre VARCHAR(60) NOT NULL,
+    precio_compra FLOAT NOT NULL,
+    precio_venta FLOAT NOT NULL,
+    descripcion TEXT NOT NULL,
+    fk_categoria INT UNSIGNED NOT NULL,
+    FOREIGN KEY (fk_categoria) REFERENCES categoria_productos(id)
+);
+
+CREATE TABLE IF NOT EXISTS departamentos(
+    id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    nombre_departamento VARCHAR(60) NOT NULL,
+    clave VARCHAR(60) NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS personas(
+    id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    nombre_persona VARCHAR(60) NOT NULL,
+    apellidos VARCHAR(60) NOT NULL,
+    genero ENUM('M', 'F') NOT NULL,
+    fecha_nacimiento DATE NOT NULL,
+    curp VARCHAR(20) NOT NULL UNIQUE,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    telefono VARCHAR(10) NOT NULL UNIQUE
+);
+
+CREATE TABLE IF NOT EXISTS empleados(
+    id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    no_empleado INT NOT NULL UNIQUE,
+    rfc VARCHAR(60) NOT NULL UNIQUE,
+    fk_persona INT UNSIGNED NOT NULL,
+    salario DOUBLE NOT NULL,
+    fecha_ingreso DATE NOT NULL,
+    fk_departamento INT UNSIGNED NOT NULL,
+    FOREIGN KEY (fk_persona) REFERENCES personas(id),
+    FOREIGN KEY (fk_departamento) REFERENCES departamentos(id)
+);
